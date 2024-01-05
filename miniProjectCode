@@ -1,0 +1,68 @@
+class BankAccount:
+    def __init__(self, account_number, pin):
+        self.account_number = account_number
+        self.pin = pin
+        self.balance = 0
+        print("Hello, welcome to the banking system!")
+        
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            print(f"\nAmount deposited: {amount}")
+        else:
+            print("\nInvalid amount. Please enter a positive number.")
+
+    def withdraw(self, amount):
+        if amount > 0 and amount <= self.balance:
+            self.balance -= amount
+            print(f"\nAmount withdrawn: {amount}")
+        else:
+            print("\nInvalid amount. Please enter a positive number that is less than or equal to your balance.")
+
+    def display(self):
+        print(f"\nCurrent balance: {self.balance}")
+
+def login():
+    account_number = input("Enter your account number: ")
+    pin = input("Enter your pin: ")
+
+    if account_number in bank_data and pin == bank_data[account_number]["pin"]:
+        return BankAccount(account_number, pin)
+    else:
+        print("\nInvalid account number or pin. Please try again.")
+        return None
+
+bank_data = {
+    "123456": {"pin": "1111", "balance": 1000},
+    "654321": {"pin": "2222", "balance": 2000},
+    "789012": {"pin": "3333", "balance": 3000}
+}
+
+def menu():
+    print("\nPlease choose an option:")
+    print("1. Deposit")
+    print("2. Withdraw")
+    print("3. Check balance")
+    print("4. Logout")
+
+print("Welcome to the banking system!")
+
+account = login()
+
+while account:
+    menu()
+    choice = input("Enter your choice: ")
+
+    if choice == "1":
+        amount = float(input("Enter the amount to deposit: "))
+        account.deposit(amount)
+    elif choice == "2":
+        amount = float(input("Enter the amount to withdraw: "))
+        account.withdraw(amount)
+    elif choice == "3":
+        account.display()
+    elif choice == "4":
+        print("\nThank you for using the banking system. Goodbye!")
+        account = None
+    else:
+        print("\nInvalid choice. Please enter a number between 1 and 4.")
